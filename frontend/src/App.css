@@ -7,13 +7,18 @@
 }
 /* Navbar css */
 .logo-img{
-  padding-right: 2rem;
+  display: flex;
+  align-items: center;
+  margin-left: -3rem;
+  /* padding-right: 2rem;
   padding-top: 1rem;
-  flex: none;
+  padding-bottom: 1rem; */
+  /* flex: none; */
   width: 10rem;
-  height: 12rem;
+  height: 66px;
 }
 .search{
+  margin-left: -4.8rem;
   position: absolute;
   background-color: white;
   border: none;
@@ -810,10 +815,102 @@ color: black;
 
 .homepage{
   display: flex;
-  justify-content: center;
+  justify-content: start;
   gap: 2.25rem;
 }
 
 .latest-blogs{
+  
   width: 100%;
+}
+
+
+/* inpage navigation css */
+.scroll-container{
+    min-width: 100%;
+  position: relative;
+  margin-bottom: 2rem;
+  background-color: white;
+   border-bottom: 1px solid #ccc; 
+  display: flex;                  
+  flex-wrap: nowrap;             
+  overflow-x: auto;  
+
+}
+
+.btns{
+ color: #6b6b6b;
+  padding: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.15rem;
+  text-transform: capitalize;
+  border: none;
+  outline: none;
+  background-color: white;
+}
+.btns.active{
+  color: #242424;
+}
+.btns.inactive{
+  color: #6b6b6b;
+}
+.btns:hover{
+  color: #111;
+}
+.tabline{
+ z-index: 2;
+  border: 0.7px solid #000;
+  color: #000;
+  position: absolute;
+  bottom: 0rem;
+  transition-duration: 300ms;
+}
+
+@media (min-width: 768px){
+  .btns-hidden{
+    display: none;
+  }
+}
+/* loader.component */
+.loader-container {
+  width: 3rem;
+  margin: 2rem auto;
+}
+
+.loader-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 0.5rem;
+  color: white;
+  animation: spin 1s linear infinite;
+  fill: #2e2e2e;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* bl0g-post component  */
+.blog-post-container{
+  width: 100%;
+}
+.blog-post{
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+.pfi{
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+
+}
+.bio{
+  line-clamp: 1;
+}
+.date{
+  min-width: fit-content;
 }
