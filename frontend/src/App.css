@@ -16,6 +16,7 @@
   /* flex: none; */
   width: 10rem;
   height: 66px;
+  margin-top: 1rem;
 }
 .search{
   margin-left: -4.8rem;
@@ -955,12 +956,14 @@ color: black;
 
 
 .tag-like-container{
+ 
   padding-right: 1rem;
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
 }
 .tag-used{
+   font-size: 14.8px;
   padding: 0.25rem 1rem;
 
 }
@@ -1036,4 +1039,14 @@ color: black;
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+}
+
+/* no data  component  */
+.nodata-message{
+   text-align: center;                   
+  width: 100%;                          
+  padding: 1rem;                        
+  border-radius: 9999px;                
+  background-color: rgba(243, 243, 243, 0.5); /* #f3f3f3 with 50% opacity */
+  margin-top: 1rem;
 }

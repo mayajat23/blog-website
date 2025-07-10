@@ -256,6 +256,11 @@ a:hover {
   border: none;
   
 }
+.tag.active{
+  background-color: #242424;
+  color: white;
+  
+}
 
 
 .ce-block__content,
