@@ -209,7 +209,7 @@ const BlogEditor = () => {
                 <textarea 
                 defaultValue={title}
                 placeholder="Blog Title"
-                className="blog-title"
+                className="blogtitle"
                 onKeyDown={handleTitleKeyDown}
                 onChange={handleTitleChange}
                 >

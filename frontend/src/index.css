@@ -209,16 +209,22 @@ h3 {
 }
 
 .blog-title {
-  font-size: 1.5rem;
+  margin-top: 2rem;
+  font-size: 1.25rem;
   font-weight: 500;
-  line-height: 1.75rem;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
+  height: auto;
+  line-height: 1.6;
   overflow: hidden;
-  line-clamp: 3;
-  
-  
+  display: -webkit-box;
+  display: box; /* standard syntax fallback */
+  -webkit-box-orient: vertical;
+  box-orient: vertical; /* standard fallback */
+  -webkit-line-clamp: 3;
+  line-clamp: 3; /* standard syntax */
+  white-space: normal;
+  word-break: break-word;
 }
+
 @media (min-width: 640px){
   .blog-title{
     line-clamp: 2;
@@ -247,6 +253,8 @@ a:hover {
   background-color: #f5f5f5;
   border-radius: 9999px;
   text-transform: capitalize;
+  border: none;
+  
 }
 
 

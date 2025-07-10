@@ -606,7 +606,7 @@ color: black;
   z-index: 20;
 }
 
-.blog-title{
+.blogtitle{
   font-size: 2.25rem; 
   line-height: 1.25; 
   font-weight: 500;
@@ -893,6 +893,23 @@ color: black;
 }
 
 /* bl0g-post component  */
+
+.all{
+  margin-left: 0.7rem;
+  color: inherit;
+  text-decoration: none;
+  opacity: 1;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  border-bottom: 1px solid #f3f3f3;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1rem;
+}
+.all:hover{
+  color: inherit;
+  opacity: 1;
+}
 .blog-post-container{
   width: 100%;
 }
@@ -900,7 +917,7 @@ color: black;
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  margin-bottom: 1.75rem;
+  margin-bottom: -1.5rem;
 }
 .pfi{
   width: 1.5rem;
@@ -913,4 +930,110 @@ color: black;
 }
 .date{
   min-width: fit-content;
+}
+
+.shortdes{
+  padding-left: 0.12rem;
+  margin-top: 0rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-family: 'Gelasio', serif;
+  line-height: 1.75rem;
+  line-clamp: 2;
+
+}
+@media (max-width: 639px) {
+  .shortdes {
+    display: none;
+  }
+}
+@media (min-width: 640px) and (max-width: 1100px) {
+  .shortdes {
+    display: none;
+  }
+}
+
+
+.tag-like-container{
+  padding-right: 1rem;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.tag-used{
+  padding: 0.25rem 1rem;
+
+}
+.likes{
+  margin-left: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b6b6b;
+}
+.like-icon{
+  font-size: 1.2rem;
+}
+.banner-container{
+  height: 7rem;
+  aspect-ratio: 1 / 1;
+  background-color: #f3f3f3;
+}
+.banner-img{
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+/* nobanner blog post component */
+.trending-blog-container{
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  text-decoration: none;
+  color: inherit;
+  margin-left: 0.7rem;
+}
+
+/* filters-trending-blogs */
+.filter-trending-blogs{
+  min-width: 40%;
+  max-width: min-content;
+  border-left: 1px solid #f3f3f3;
+  padding-left: 2rem;  
+  padding-top: 0.75rem;
+}
+@media (min-width: 1024px) {
+  .filter-trending-blogs {
+    min-width: 400px;
+  }
+}
+
+@media (max-width: 767px) {
+  .filter-trending-blogs {
+    display: none;
+  }
+}
+.stories{
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.text-stories{
+  
+  font-weight: lighter;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  padding: 1rem;
+}
+.trending{
+  font-weight: lighter;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+.tags-trending{
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
