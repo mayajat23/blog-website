@@ -263,7 +263,10 @@ server.post("/google-auth", async (req, res) => {
 
 })
 
-server.get('/latest-blogs', (req, res) => {
+// latest blogs
+server.post('/latest-blogs', (req, res) => {
+
+  let { page } = req.body;
 
   let maxLimit = 5;
 
@@ -271,6 +274,7 @@ server.get('/latest-blogs', (req, res) => {
   .populate("author", "personal_info.profile_img personal_info.username personal_info.fullname -_id")
   .sort({ "publishedAt": -1 })
   .select("blog_id title des banner activity tags publishedAt -_id")
+  .skip((page - 1) * maxLimit)
   .limit(maxLimit)
   .then(blogs => {
     return res.status(200).json({ blogs })
@@ -279,6 +283,19 @@ server.get('/latest-blogs', (req, res) => {
     return res.status(500).json({ error: err.message })
   })
 
+})
+
+// all-latest-blogs-count
+server.post("/all-latest-blogs-count", (req, res) => {
+
+  Blog.countDocuments({ draft: false })
+  .then(count => {
+    return res.status(200).json({ totalDocs: count })
+  })
+  .catch(err => {
+    console.log(err.message);
+    return res.status(500).json({ error: err.message })
+  })
 })
 
 
@@ -299,18 +316,27 @@ server.get("/trending-blogs", (req, res) => {
    
 })
 
+
+// search-blogs
 server.post("/search-blogs", (req, res) => {
 
-  let { tag } = req.body;
+  let { tag, query, page } = req.body;
 
-  let findQuery = { tags: tag, draft: false };
+  let findQuery;
 
-  let maxLimit = 5;
+  if(tag){
+      findQuery = { tags: tag, draft: false };
+  } else if(query){
+       findQuery = { draft: false, title: new RegExp(query, 'i') }   //search by blogs' name (query)
+  }
+
+  let maxLimit = 2;
 
   Blog.find(findQuery)
  .populate("author", "personal_info.profile_img personal_info.username personal_info.fullname -_id")
   .sort({ "publishedAt": -1 })
   .select("blog_id title des banner activity tags publishedAt -_id")
+  .skip((page - 1)* maxLimit)
   .limit(maxLimit)
   .then(blogs => {
     return res.status(200).json({ blogs })
@@ -320,6 +346,52 @@ server.post("/search-blogs", (req, res) => {
   })
   
 })
+
+
+// search-blogs-count
+server.post("/search-blogs-count", (req,res) => {
+
+  let { tag, query } = req.body;
+
+  let findQuery;
+
+  if(tag){
+      findQuery = { tags: tag, draft: false };
+  } else if(query){
+       findQuery = { draft: false, title: new RegExp(query, 'i') }   //search by blogs' name (query)
+  }
+
+  Blog.countDocuments(findQuery)
+  .then(count => {
+    return res.status(200).json({ totalDocs: count })
+  })
+  .catch(err => {
+    console.log(err.message)
+    return res.status(500).json({ error: err.message })
+  })
+
+})
+
+
+
+// search-users
+server.post("/search-users", (req,res) => {
+  
+  let { query } = req.body;
+
+  User.find({ "personal_info.username": new RegExp(query, 'i') })
+  .limit(50)
+  .select("personal_info.fullname personal_info.username personal_info.profile_img -_id")
+  .then(users => {
+    return res.status(200).json({ users })
+  })
+  .catch(err => {
+    return res.status(500).json({ error: err.message})
+  })
+  
+})
+
+
 
 
 //create-blog

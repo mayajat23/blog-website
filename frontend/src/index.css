@@ -223,6 +223,7 @@ h3 {
   line-clamp: 3; /* standard syntax */
   white-space: normal;
   word-break: break-word;
+ 
 }
 
 @media (min-width: 640px){

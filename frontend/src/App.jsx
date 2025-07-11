@@ -11,7 +11,7 @@ import { lookInSession } from "./common/session";
 import Navbar from "./components/navbar.component.jsx";
 import Editor from "./pages/editor.page.jsx";
 import HomePage from "./pages/home.page.jsx";
-
+import SearchPage from "./pages/search.page.jsx";
 
  export const UserContext = createContext({})
 
@@ -42,6 +42,7 @@ const App =() => {
       <Route index element={<HomePage />} />
        <Route  path="signin" element={<UserAuthForm type="sign-in" />} />
        <Route  path="signup" element={<UserAuthForm type="sign-up" />} />
+       <Route path="search/:query" element={<SearchPage />} />
       </Route>
     </Routes>
     </UserContext.Provider>

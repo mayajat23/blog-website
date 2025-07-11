@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../imgs/logo (3).png";
 import { CiSearch } from "react-icons/ci";
 import { HiMiniPencilSquare } from "react-icons/hi2";
@@ -12,6 +12,8 @@ const Navbar = () => {
     const [ searchBoxVisibility, setSearchBoxVisibility] = useState(false)
 
     const [ userNavPanel , setUserNavPanel ] = useState(false);
+
+    let navigate = useNavigate();
 
    const { userAuth = {} } = useContext(UserContext);
 const { access_token, profile_img } = userAuth;
@@ -27,6 +29,17 @@ const handleBlur = () => {
     
 }
 
+
+const handleSearch = (e) => {
+    
+    let query = e.target.value;
+
+    if(e.keyCode == 13 && query.length){
+        navigate(`/search/${query}`)
+    }
+}   
+
+
 return (
 <>
 <nav className="navbar" >
@@ -35,7 +48,9 @@ return (
     <img src={logo} alt="logo" />
     </Link>
 <div className={`search show ${searchBoxVisibility ? "show" : "hide"}`}>
-    <input type="text" placeholder="search" className="search-input" />
+    <input type="text" placeholder="search" className="search-input" 
+    onKeyDown={handleSearch} 
+    />
   
    <CiSearch className="search-icon" size={24}/>
 </div>

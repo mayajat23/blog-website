@@ -9,6 +9,8 @@ import MinimialBlogPost from "../components/nobanner-blog-post.component";
 import { IoIosTrendingUp } from "react-icons/io";
 import { activeTabRef } from "../components/inpage-navigation.component";
 import NoDataMessage from "../components/nodata.component";
+import { filterPaginationData } from "../common/filter-pagination-data";
+import LoadMoreDataBtn from "../components/load-more-component";
 
 const HomePage = () => {
   let [blogs, setBlog] = useState(null);
@@ -27,11 +29,20 @@ const HomePage = () => {
   ];
 
   //  latest blogs
-  const fetchLatestBlogs = () => {
+  const fetchLatestBlogs = ({page = 1}) => {
     axios
-      .get(import.meta.env.VITE_SERVER_DOMAIN + "/latest-blogs")
-      .then(({ data }) => {
-        setBlog(data.blogs);
+      .post(import.meta.env.VITE_SERVER_DOMAIN + "/latest-blogs", { page })
+      .then( async ({ data }) => {
+
+        
+        let formatedData =  await filterPaginationData({
+           state: blogs,
+           data: data.blogs,
+           page,
+           countRoute: "/all-latest-blogs-count"
+        })
+        
+        setBlog(formatedData);
       })
       .catch((err) => {
         console.log(err);
@@ -39,13 +50,20 @@ const HomePage = () => {
   };
 
   // blogs by category
-  const fetchBlogsByCategory = () => {
+  const fetchBlogsByCategory = ({page = 1}) => {
     axios
-      .post(import.meta.env.VITE_SERVER_DOMAIN + "/search-blogs", {
-        tag: pageState,
-      })
-      .then(({ data }) => {
-        setBlog(data.blogs);
+      .post(import.meta.env.VITE_SERVER_DOMAIN + "/search-blogs", { tag: pageState, page })
+      .then( async ({ data }) => {
+
+           let formatedData =  await filterPaginationData({
+           state: blogs,
+           data: data.blogs,
+           page,
+           countRoute: "/search-blogs-count",
+           data_to_send: { tag: pageState }
+          })
+          
+           setBlog(formatedData);
       })
       .catch((err) => {
         console.log(err);
@@ -79,9 +97,9 @@ const HomePage = () => {
   useEffect(() => {
     activeTabRef.current.click();
     if (pageState == "home") {
-      fetchLatestBlogs();
+      fetchLatestBlogs({ page: 1 });
     } else {
-      fetchBlogsByCategory();
+      fetchBlogsByCategory({ page: 1 });
     }
 
     if (!trendingBlog) {
@@ -102,8 +120,8 @@ const HomePage = () => {
               {blogs == null ? (
                 <Loader />
               ) : (
-                blogs.length ? 
-                  blogs.map((blog, i) => {
+                blogs.results.length ? 
+                  blogs.results.map((blog, i) => {
                    return (
                       <AnimationWrapper key={i}>
                         <BLogPostCard
@@ -115,6 +133,7 @@ const HomePage = () => {
                   })
                 : <NoDataMessage message="No blogs published" />
               )}
+              <LoadMoreDataBtn state={blogs} fetchDataFun={( pageState == "home" ? fetchLatestBlogs : fetchBlogsByCategory )} />
             </>
 
             {trendingBlog == null ? (
