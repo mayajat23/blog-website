@@ -8,6 +8,8 @@ import NoDataMessage from "../components/nodata.component";
 import LoadMoreDataBtn from "../components/load-more-component";
 import axios from "axios";
 import { filterPaginationData } from "../common/filter-pagination-data";
+import UserCard from "../components/usercard.component";
+import { RiUserLine } from "react-icons/ri";
 
 const SearchPage = () => {
 
@@ -40,7 +42,7 @@ const SearchPage = () => {
     }
 
     const fetchUsers = () => {
-        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/search-blogs", { query })
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/search-users", { query })
         .then(({ data: { users } }) => {
             setUsers(users);
         })
@@ -58,6 +60,24 @@ const SearchPage = () => {
 const resetState = () => {
     setBlog(null);
     setUsers(null);
+}
+
+const UserCardWrapper = () => {
+    return (
+        <>
+           {
+               users == null ? <Loader /> :
+                 users.length ?
+                  users.map((user, i) => {
+                    return <AnimationWrapper>
+                        <UserCard  user={user} />
+                    </AnimationWrapper> 
+                  })
+                  : <NoDataMessage message="No user found" />
+               
+           }
+        </>
+    )
 }
 
     return (
@@ -84,8 +104,18 @@ const resetState = () => {
               )}
               <LoadMoreDataBtn state={blogs} fetchDataFun={searchBlogs} />
             </>
+              
+            <UserCardWrapper />
           
             </InPageNavigation>
+        </div>
+
+{/* users related to search */}
+        <div className="user-search-container">
+            <h1 className="user-search-text">User related to search <RiUserLine  className="user-search-icon" /></h1>
+
+            <UserCardWrapper />
+
         </div>
 
        </section> 

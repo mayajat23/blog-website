@@ -1,5 +1,5 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import logo from "../imgs/logo (3).png";
+import logo from "../imgs/logo (4).png";
 import { CiSearch } from "react-icons/ci";
 import { HiMiniPencilSquare } from "react-icons/hi2";
 import { useState } from "react";

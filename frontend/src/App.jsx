@@ -12,6 +12,7 @@ import Navbar from "./components/navbar.component.jsx";
 import Editor from "./pages/editor.page.jsx";
 import HomePage from "./pages/home.page.jsx";
 import SearchPage from "./pages/search.page.jsx";
+import PageNotFound from "./pages/404.page.jsx";
 
  export const UserContext = createContext({})
 
@@ -43,6 +44,7 @@ const App =() => {
        <Route  path="signin" element={<UserAuthForm type="sign-in" />} />
        <Route  path="signup" element={<UserAuthForm type="sign-up" />} />
        <Route path="search/:query" element={<SearchPage />} />
+       <Route path="*"  element={<PageNotFound />}/>
       </Route>
     </Routes>
     </UserContext.Provider>
