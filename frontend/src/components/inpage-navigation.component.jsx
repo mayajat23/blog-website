@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 export let activeTabLineRef;
 export let activeTabRef;
 
-const InpageNavigation = ({ routes,defaultHidden = [], defaultActiveIndex = 0, children }) => {
+const InPageNavigation = ({ routes,defaultHidden = [], defaultActiveIndex = 0, children }) => {
 
     activeTabLineRef = useRef();
     activeTabRef = useRef();
@@ -44,4 +44,4 @@ const InpageNavigation = ({ routes,defaultHidden = [], defaultActiveIndex = 0, c
     )
 }
 
-export default InpageNavigation;
+export default InPageNavigation;
