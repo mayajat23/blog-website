@@ -170,16 +170,16 @@ useEffect(() => {
         <AnimationWrapper key={location.pathname}>
         <div
          className="auth-bg-wrapper"
-  style={{ backgroundColor: slides[current].bgColor }}
->
- {slides[current].image.map((src, i) => (
-  <img
-    key={i}
+        style={{ backgroundColor: slides[current].bgColor }}
+         >
+        {slides[current].image.map((src, i) => (
+    <img
+     key={i}
     src={src}
-    className={`auth-bg-image position-${i} ${isActive ? "active" : ""}`}
+     className={`auth-bg-image position-${i} ${isActive ? "active" : ""}`}
     
-    alt=""
-  />
+     alt=""
+    />
 ))}
 
 

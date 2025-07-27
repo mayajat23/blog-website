@@ -8,6 +8,7 @@ import { getDay } from "../common/date";
 import BlogInteraction from "../components/blog-interaction.component";
 import BLogPostCard from "../components/blog-post.component";
 import BlogContent from "../components/blog-content.component";
+import CommentsContainer, { fetchComments } from "../components/comments.component";
 
 export const blogStructure = {
       title: '',
@@ -29,14 +30,28 @@ const BlogPage = () => {
     const [ blog, setBlog ] = useState(blogStructure);
     const [ similarBlogs, setSimilarBlogs ] = useState(null)
     const [ loading, setLoading ] = useState(true);
+    const [ islikedByUser, setLikedByUser ] = useState(false);
+    const [ commentsWrapper, setCommentsWrapper ] = useState(false);
+    const [ totalParentCommentsLoaded, setTotalParentCommentsLoaded ] = useState(0);
 
     let { title, content, banner, author: { personal_info: { fullname, username: author_username, profile_img } }, publishedAt } = blog;
 
     const fetchBlog = () => {
         axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/get-blog", { blog_id })
-        .then(({ data: { blog } }) => {
-                    setBlog(blog);
-                    console.log(blog.content);
+
+        .then(async ({ data: { blog } }) => {
+
+            
+
+            blog.comments = await fetchComments({ blog_id: blog._id, setParentCommentCountFun: setTotalParentCommentsLoaded })
+
+           
+
+            setBlog(blog);
+            
+           
+                    
+
            axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/search-blogs", { tag: blog.tags[0], limit: 6, eliminate_blog: blog_id })
            .then(({ data }) => {
                setSimilarBlogs(data.blogs);
@@ -61,6 +76,9 @@ const BlogPage = () => {
         setBlog(blogStructure);
         setSimilarBlogs(null);
         setLoading(true);
+        setLikedByUser(false);
+       setCommentsWrapper(false );
+        setTotalParentCommentsLoaded(0);
     }
 
    return (
@@ -69,7 +87,10 @@ const BlogPage = () => {
         {
             loading ? <Loader /> 
             :
-            <BlogContext.Provider value={{ blog, setBlog }}>
+            <BlogContext.Provider value={{ blog, setBlog, islikedByUser, setLikedByUser, commentsWrapper, setCommentsWrapper, totalParentCommentsLoaded, setTotalParentCommentsLoaded }}>
+
+                <CommentsContainer />
+
             <div className="center blog-page-container">
                 <img src={banner} className="banner-of-blog" />
                 <div className="blog-details">
@@ -92,17 +113,21 @@ const BlogPage = () => {
                 {/* blog content will go over here */}
                     <div className="blog-content-container blog-page-content">
                         {
-                         content[0].blocks.map((block, i) => {
+                         content && content[0] && content[0].blocks && (
+                           content[0].blocks.map((block, i) => {
                            return (
                                 <div key={i} className="blog-content">
                                     <BlogContent block={block} />
                                 </div>
                             );
 
-                          })
+                            })
+                        )
+                        
                         }
-
+                    
                     </div>
+                    
                  <BlogInteraction />
 
                  {

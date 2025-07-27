@@ -23,7 +23,7 @@ const List = ({ style, items }) => {
         <ol className={`list-container ${style === "ordered" ? "ordered" : ""}`}>
             {
                 items.map((listItem, i) => {
-                    console.log("List item:", listItem);
+                    
 
                     return <li key={i} className="list" dangerouslySetInnerHTML={{ __html: listItem.content }} ></li>
                 
